@@ -28,19 +28,6 @@ export default function Home() {
     const [todayPhotos, setTodayPhotos] = useState<Photo[]>([]);
     const { isAddHabitOpen, setAddHabitOpen } = useApp();
 
-    // For URL-based triggering (Fix Navbar Add Button)
-    const searchParams = useSearchParams();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (searchParams.get('openAdd') === 'true') {
-            setIsFormOpen(true);
-            setEditingHabit(undefined); // Ensure it's add mode
-            // Clear param
-            router.replace('/');
-        }
-    }, [searchParams, router]);
-
     // Handle Global Add Trigger
     useEffect(() => {
         if (isAddHabitOpen) {
