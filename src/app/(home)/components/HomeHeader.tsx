@@ -10,7 +10,7 @@ export default function HomeHeader({ habitsCount }: HomeHeaderProps) {
     const { t } = useLanguage();
     const { userName } = useApp();
     return (
-        <header className="flex justify-between items-center mb-10 mt-6 px-2">
+        <header className="flex justify-between items-center pb-10 pt-6 px-2">
             <div>
                 <h1 className="text-3xl font-extrabold tracking-tight mb-1">
                     {t("greeting", { name: userName }).split("Keep")[0]}

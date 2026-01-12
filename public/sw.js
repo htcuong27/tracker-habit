@@ -1,7 +1,7 @@
 const CACHE_NAME = 'habit-snap-v1';
 const urlsToCache = [
     '/',
-    '/history',
+    '/calendar',
     '/profile',
     '/pomodoro',
     '/manifest.json',

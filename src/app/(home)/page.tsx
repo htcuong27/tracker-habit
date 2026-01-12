@@ -176,13 +176,16 @@ export default function Home() {
 
     return (
         <main className="page-container min-h-screen">
-            <HomeHeader habitsCount={todaysHabits.length} />
+            <div className="sticky top-0 z-50 bg-black">
+                <HomeHeader habitsCount={todaysHabits.length} />
 
-            <ProgressOverview
-                todaysHabits={todaysHabits}
-                completionRate={completionRate}
-                completedToday={completedToday}
-            />
+                <ProgressOverview
+                    todaysHabits={todaysHabits}
+                    completionRate={completionRate}
+                    completedToday={completedToday}
+                />
+
+            </div>
 
             {/* Heatmap */}
             <Heatmap habits={habits} />

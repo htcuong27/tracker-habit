@@ -13,8 +13,23 @@ export const translations = {
         habits: "thói quen",
         weekDaysShort: "CN,T2,T3,T4,T5,T6,T7",
 
-        // History
-        photoHistory: "Lịch sử Ảnh",
+        // Habit Form Modal
+        habitFormAdd: "Tạo thói quen mới",
+        habitFormName: "Tên thói quen",
+        habitFormReminderTime: "Giờ nhắc nhở",
+        habitFormIcon: "Biểu tượng",
+        habitFormEdit: "Chỉnh sửa thói quen",
+        habitFormPlaceholder: "Ví dụ: Tập gym buổi sáng",
+        habitFormStartDate: "Ngày bắt đầu",
+        habitFormLoop: "Lặp lại",
+        habitFormLoopDaily: "Mỗi ngày",
+        habitFormColor: "Màu sắc",
+        habitFormDayCustom: "Tùy chỉnh ngày",
+        habitFormDailyCustom: "Chuyển về Hàng ngày",
+
+
+        // Calendar
+        photoCalendar: "Ảnh",
         statistics: "Thống kê",
         photosTaken: "Ảnh đã chụp",
         thisMonth: "Tháng này",
@@ -45,12 +60,12 @@ export const translations = {
 
         // Navigation
         home: "Trang chủ",
-        history: "Lịch",
+        calendar: "Lịch",
         add: "Thêm",
         pomodoro: "Thống kê", // User wants this labeled Stats based on context
         profile: "Cá nhân",
 
-        // History Tabs
+        // Calendar Tabs
         moments: "Khoảnh khắc",
         yours: "Của bạn",
         tabPhotos: "Ảnh",
@@ -88,6 +103,7 @@ export const translations = {
         save: "Lưu",
         cancel: "Hủy",
         confirm: "Xác nhận",
+        create: "Tạo",
 
         // Habit
         habitName: "Tên thói quen",
@@ -98,6 +114,20 @@ export const translations = {
         editHabit: "Chỉnh sửa thói quen",
         deleteHabit: "Xóa thói quen",
         deleteConfirm: "Bạn có chắc muốn xóa thói quen này?",
+
+        // Capture Modal
+        captureModalTitle: "Chụp ảnh",
+        captureModalConfirm: "Xác nhận",
+        captureModalDescription: "Chụp ảnh",
+        captureModalUnknown: "Chưa xác định",
+        captureModalRetake: "Chụp lại",
+        captureModalTag: "Gắn thẻ thói quen",
+        captureModalGallery: "Thư viện",
+        captureModalPhoto: "Ảnh",
+        captureModalSquare: "Hình vuông",
+        captureModalFlip: "Lật lại",
+        noPhotos: "Chưa có ảnh",
+        addPhoto: "Thêm ảnh",
     },
     en: {
         // Home
@@ -112,6 +142,20 @@ export const translations = {
         more: "More",
         habits: "habits",
         weekDaysShort: "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
+
+        // Habit Form Modal
+        habitFormAdd: "Add Habit",
+        habitFormName: "Habit Name",
+        habitFormReminderTime: "Reminder Time",
+        habitFormIcon: "Icon",
+        habitFormEdit: "Edit Habit",
+        habitFormPlaceholder: "Example: Morning workout",
+        habitFormStartDate: "Start Date",
+        habitFormLoop: "Loop",
+        habitFormLoopDaily: "Daily",
+        habitFormColor: "Color",
+        habitFormDayCustom: "Custom",
+        habitFormDailyCustom: "Switch to Daily",
 
         // History
         photoHistory: "Photo History",
@@ -145,12 +189,12 @@ export const translations = {
 
         // Navigation
         home: "Home",
-        history: "History",
+        calendar: "Calendar",
         add: "Add",
         pomodoro: "Stats",
         profile: "Profile",
 
-        // History Tabs
+        // Calendar Tabs
         moments: "Moments",
         yours: "Yours",
         tabPhotos: "Photos",
@@ -188,6 +232,7 @@ export const translations = {
         save: "Save",
         cancel: "Cancel",
         confirm: "Confirm",
+        create: "Create",
 
         // Habit
         habitName: "Habit Name",
@@ -198,6 +243,20 @@ export const translations = {
         editHabit: "Edit Habit",
         deleteHabit: "Delete Habit",
         deleteConfirm: "Are you sure you want to delete this habit?",
+
+        // Capture Modal
+        captureModalTitle: "Capture",
+        captureModalConfirm: "Confirm",
+        captureModalDescription: "Capture your moment",
+        captureModalUnknown: "Unknown",
+        captureModalRetake: "Retake",
+        captureModalTag: "Tag Habit",
+        captureModalGallery: "Gallery",
+        captureModalPhoto: "Photo",
+        captureModalSquare: "Square",
+        captureModalFlip: "Flip",
+        noPhotos: "No photos",
+        addPhoto: "Add photo",
     },
 };
 

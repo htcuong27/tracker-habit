@@ -145,3 +145,15 @@ export const deletePhoto = async (id: number): Promise<void> => {
         request.onerror = () => reject(request.error);
     });
 };
+
+export const updatePhoto = async (photo: Photo): Promise<void> => {
+    const database = await initDB();
+    return new Promise((resolve, reject) => {
+        const transaction = database.transaction(PHOTOS_STORE, "readwrite");
+        const store = transaction.objectStore(PHOTOS_STORE);
+        const request = store.put(photo);
+
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+    });
+};

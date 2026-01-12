@@ -27,7 +27,7 @@ export default function BottomNav({ onAddClick }: BottomNavProps) {
 
     const navItems = [
         { icon: Home, label: t("home"), path: "/" },
-        { icon: Calendar, label: t("history"), path: "/history" },
+        { icon: Calendar, label: t("calendar"), path: "/calendar" },
         { icon: Plus, label: "", path: "#", isSpecial: true },
         { icon: Timer, label: "Pomodoro", path: "/pomodoro" }, // Label fixed to Pomodoro as requested
         { icon: User, label: t("profile"), path: "/profile" },

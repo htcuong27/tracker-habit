@@ -1,23 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Camera, Calendar as CalendarIcon, Image as ImageIcon, BarChart2 } from "lucide-react";
-import { useLanguage } from "@/lib/hooks/useLanguage";
+import { addPhoto, deletePhoto, getAllPhotos, updatePhoto } from "@/lib/db";
 import { useHabits } from "@/lib/hooks/useHabits";
-import { getAllPhotos, addPhoto, deletePhoto } from "@/lib/db";
+import { useLanguage } from "@/lib/hooks/useLanguage";
 import { Photo } from "@/lib/types";
+import { BarChart2, Calendar as CalendarIcon, Camera, Image as ImageIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 // Components
 import CaptureModal from "@/components/ui/CaptureModal";
 import DayDetailModal from "@/components/ui/DayDetailModal";
 import PhotoLightbox from "@/components/ui/PhotoLightbox";
 
-// History Components
+// Calendar Components
 import CalendarView from "./components/CalendarView";
 import PhotosView from "./components/PhotosView";
 import StatsView from "./components/StatsView";
 
-export default function HistoryPage() {
+export default function CalendarPage() {
     const { t } = useLanguage();
     const { habits, modifyHabit } = useHabits();
 
@@ -104,6 +104,18 @@ export default function HistoryPage() {
         } catch (e) { console.error(e) }
     };
 
+    const handleUpdatePhoto = async (photo: Photo) => {
+        if (!photo.id) return;
+        try {
+            await updatePhoto(photo);
+            await loadPhotos();
+            // Update current photos being viewed too
+            setLightboxPhotos(prev => prev.map(p => p.id === photo.id ? photo : p));
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     const openLightbox = (list: Photo[], index: number) => {
         setLightboxPhotos(list);
         setLightboxIndex(index);
@@ -122,7 +134,7 @@ export default function HistoryPage() {
     return (
         <main className="page-container min-h-screen pt-6">
             <header className="flex justify-between items-center mb-6 px-2">
-                <h1 className="text-3xl font-extrabold tracking-tight">Lịch sử</h1>
+                <h1 className="text-3xl font-extrabold tracking-tight">{t("calendar")}</h1>
 
                 {/* Mode Toggle */}
                 <div className="flex bg-white/10 p-1 rounded-xl">
@@ -220,6 +232,8 @@ export default function HistoryPage() {
                     initialIndex={lightboxIndex}
                     onClose={() => setLightboxOpen(false)}
                     onDelete={handleDeletePhoto}
+                    onUpdate={handleUpdatePhoto}
+                    habits={habits}
                 />
             )}
         </main>
