@@ -157,8 +157,8 @@ export const translations = {
         habitFormDayCustom: "Custom",
         habitFormDailyCustom: "Switch to Daily",
 
-        // History
-        photoHistory: "Photo History",
+        // Calendar
+        photoCalendar: "Photo Calendar",
         statistics: "Statistics",
         photosTaken: "Photos Taken",
         thisMonth: "This Month",
