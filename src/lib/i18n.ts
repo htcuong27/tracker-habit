@@ -7,6 +7,11 @@ export const translations = {
         habitsCompleted: "{completed}/{total} thói quen hoàn thành",
         todayHabits: "Thói quen hôm nay",
         addNew: "Thêm mới",
+        activity: "Hoạt động",
+        less: "Ít",
+        more: "Nhiều",
+        habits: "thói quen",
+        weekDaysShort: "CN,T2,T3,T4,T5,T6,T7",
 
         // History
         photoHistory: "Lịch sử Ảnh",
@@ -102,6 +107,11 @@ export const translations = {
         habitsCompleted: "{completed}/{total} habits completed",
         todayHabits: "Today's Habits",
         addNew: "Add New",
+        activity: "Habit Activity",
+        less: "Less",
+        more: "More",
+        habits: "habits",
+        weekDaysShort: "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
 
         // History
         photoHistory: "Photo History",

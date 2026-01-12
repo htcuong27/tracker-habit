@@ -88,8 +88,8 @@ export default function SwipeableHabitCard({
             >
                 <div className="flex items-center gap-4">
                     <div
-                        className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-colors duration-300 ${isCompletedToday ? "bg-emerald-500 text-white" : "bg-white/5 text-gray-400"
-                            }`}
+                        style={isCompletedToday ? { backgroundColor: habit.color } : undefined}
+                        className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-colors duration-300 ${isCompletedToday ? "text-white" : "bg-white/5 text-gray-400"}`}
                     >
                         {habit.icon}
                     </div>

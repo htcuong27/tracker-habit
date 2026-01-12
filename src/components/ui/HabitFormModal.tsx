@@ -171,7 +171,7 @@ export default function HabitFormModal({ isOpen, onClose, onSave, habit }: Habit
 
                                 {/* Start Date */}
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-400 mb-2 flex items-center gap-2">
+                                    <label className="text-sm font-bold text-gray-400 mb-2 flex items-center gap-2">
                                         <Calendar size={16} /> Ngày bắt đầu
                                     </label>
                                     <input
