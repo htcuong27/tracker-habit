@@ -133,7 +133,7 @@ export default function CalendarPage() {
     // --- Render ---
     return (
         <main className="page-container min-h-screen pt-6">
-            <header className="flex justify-between items-center mb-6 px-2">
+            <header className="flex justify-between items-center px-2 py-6 sticky top-0 z-50 bg-black">
                 <h1 className="text-3xl font-extrabold tracking-tight">{t("calendar")}</h1>
 
                 {/* Mode Toggle */}

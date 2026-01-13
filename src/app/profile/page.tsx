@@ -9,10 +9,9 @@ import { useState, useEffect } from "react";
 
 export default function ProfilePage() {
     const { language, changeLanguage, t } = useLanguage();
-    const { userName, setUserName, theme, toggleTheme } = useApp();
+    const { userName, setUserName, theme, toggleTheme, notificationSettings, updateNotificationSettings } = useApp();
     const { habits } = useHabits();
 
-    const [notifications, setNotifications] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [isEditingName, setIsEditingName] = useState(false);
     const [tempName, setTempName] = useState(userName);
@@ -33,18 +32,55 @@ export default function ProfilePage() {
     useEffect(() => {
         setMounted(true);
         if (typeof window !== "undefined" && "Notification" in window) {
-            setNotifications(Notification.permission === "granted");
+            if (Notification.permission !== "granted" && notificationSettings.enabled) {
+                updateNotificationSettings({ enabled: false });
+            }
         }
         setTempName(userName);
     }, [userName]);
 
     const handleNotificationToggle = async () => {
         if (!mounted) return;
-        if (!notifications && typeof window !== "undefined" && "Notification" in window) {
+        if (!notificationSettings.enabled && typeof window !== "undefined" && "Notification" in window) {
             const permission = await Notification.requestPermission();
-            setNotifications(permission === "granted");
+            updateNotificationSettings({ enabled: permission === "granted" });
+            if (permission === "granted") {
+                sendTestNotification();
+            }
         } else {
-            setNotifications(false);
+            updateNotificationSettings({ enabled: false });
+        }
+    };
+
+    const sendTestNotification = () => {
+        if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted") {
+            let title = t("notificationTitle");
+            let body = t("testNotificationBody");
+
+            if (notificationSettings.uiStyle === 'vibrant') {
+                title = `✨ ${title} ✨`;
+                body = `🚀 ${body} 💪`;
+            } else if (notificationSettings.uiStyle === 'minimal') {
+                title = "Habit Snap";
+                body = "Test";
+            }
+
+            const options: any = {
+                body,
+                icon: "/icons/icon-192x192.png",
+                badge: "/icons/icon-192x192.png",
+                tag: "test-notification",
+                renotify: true,
+                silent: false
+            };
+
+            if ('vibrate' in navigator) navigator.vibrate([200, 100, 200]);
+
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.ready.then(reg => reg.showNotification(title, options));
+            } else {
+                new Notification(title, options);
+            }
         }
     };
 
@@ -134,19 +170,72 @@ export default function ProfilePage() {
                     {t("settings")}
                 </h2>
 
-                <div className="glass p-5 rounded-3xl flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
-                            <Bell size={20} />
+                <div className="glass p-5 rounded-3xl space-y-6">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center">
+                                <Bell size={20} />
+                            </div>
+                            <span className="font-bold">{t("notifications")}</span>
                         </div>
-                        <span className="font-bold">{t("notifications")}</span>
+                        <button
+                            onClick={handleNotificationToggle}
+                            className={`w-12 h-6 rounded-full flex items-center px-1 transition-all ${notificationSettings.enabled ? "bg-indigo-500" : "bg-gray-600"}`}
+                        >
+                            <div className={`w-4 h-4 bg-white rounded-full transition-transform ${notificationSettings.enabled ? "translate-x-6" : ""}`} />
+                        </button>
                     </div>
-                    <button
-                        onClick={handleNotificationToggle}
-                        className={`w-12 h-6 rounded-full flex items-center px-1 transition-all ${notifications ? "bg-indigo-500" : "bg-gray-600"}`}
-                    >
-                        <div className={`w-4 h-4 bg-white rounded-full transition-transform ${notifications ? "translate-x-6" : ""}`} />
-                    </button>
+
+                    {notificationSettings.enabled && (
+                        <div className="space-y-4 pt-2 border-t border-white/5 animate-in fade-in slide-in-from-top-2 duration-300">
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest px-1">
+                                    {t("notificationAdvanceTime")}
+                                </p>
+                                <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+                                    {[0, 5, 10, 15, 30].map((mins) => (
+                                        <button
+                                            key={mins}
+                                            onClick={() => updateNotificationSettings({ advanceMinutes: mins })}
+                                            className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold transition-all ${notificationSettings.advanceMinutes === mins
+                                                ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/30"
+                                                : "bg-white/5 text-gray-400 hover:bg-white/10"
+                                                }`}
+                                        >
+                                            {mins === 0 ? t("atTime") : t("minutesBefore", { count: mins })}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest px-1">
+                                    {t("notificationStyle")}
+                                </p>
+                                <div className="flex gap-2">
+                                    {['default', 'vibrant', 'minimal'].map((style) => (
+                                        <button
+                                            key={style}
+                                            onClick={() => updateNotificationSettings({ uiStyle: style as any })}
+                                            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${notificationSettings.uiStyle === style
+                                                ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/30"
+                                                : "bg-white/5 text-gray-400 hover:bg-white/10"
+                                                }`}
+                                        >
+                                            {t(`notificationStyle${style.charAt(0).toUpperCase() + style.slice(1)}` as any)}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={sendTestNotification}
+                                className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-sm font-bold text-indigo-400 transition-all active:scale-95"
+                            >
+                                {t("testNotification")}
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 <div className="glass p-5 rounded-3xl flex items-center justify-between">

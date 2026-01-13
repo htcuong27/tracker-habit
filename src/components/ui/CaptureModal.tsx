@@ -21,7 +21,8 @@ interface CaptureModalProps {
 
 export default function CaptureModal({ isOpen, onClose, onCapture, habits = [], preSelectedHabitId }: CaptureModalProps) {
     const { t } = useLanguage();
-    const [stream, setStream] = useState<MediaStream | null>(null);
+    const streamRef = useRef<MediaStream | null>(null);
+    const isCameraActiveRef = useRef(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -34,22 +35,38 @@ export default function CaptureModal({ isOpen, onClose, onCapture, habits = [], 
 
     useEffect(() => {
         if (isOpen) {
+            isCameraActiveRef.current = true;
             startCamera();
             setCapturedImage(null);
             if (preSelectedHabitId) setSelectedHabitId(preSelectedHabitId);
         } else {
+            isCameraActiveRef.current = false;
             stopCamera();
         }
+
+        return () => {
+            isCameraActiveRef.current = false;
+            stopCamera();
+        };
     }, [isOpen, preSelectedHabitId, facingMode]);
 
     const startCamera = async () => {
+        if (!isCameraActiveRef.current) return;
+
         stopCamera(); // Clean up existing stream if any
         try {
             const s = await navigator.mediaDevices.getUserMedia({
                 video: { facingMode: facingMode },
                 audio: false
             });
-            setStream(s);
+
+            // CRITICAL: Check if camera is still wanted after the async permission prompt
+            if (!isCameraActiveRef.current) {
+                s.getTracks().forEach(track => track.stop());
+                return;
+            }
+
+            streamRef.current = s;
             if (videoRef.current) {
                 videoRef.current.srcObject = s;
             }
@@ -59,9 +76,12 @@ export default function CaptureModal({ isOpen, onClose, onCapture, habits = [], 
     };
 
     const stopCamera = () => {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-            setStream(null);
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => track.stop());
+            streamRef.current = null;
+        }
+        if (videoRef.current) {
+            videoRef.current.srcObject = null;
         }
     };
 
@@ -196,6 +216,11 @@ export default function CaptureModal({ isOpen, onClose, onCapture, habits = [], 
         }
     };
 
+    const handleClose = () => {
+        stopCamera();
+        onClose();
+    }
+
     const toggleCamera = () => {
         setFacingMode(prev => prev === 'environment' ? 'user' : 'environment');
     };
@@ -215,7 +240,7 @@ export default function CaptureModal({ isOpen, onClose, onCapture, habits = [], 
                         <h3 className="text-white font-bold text-sm tracking-wider uppercase">
                             {capturedImage ? t("captureModalConfirm") : t("captureModalTitle")}
                         </h3>
-                        <button onClick={onClose} className="p-2 bg-white/10 rounded-full text-white backdrop-blur-md">
+                        <button onClick={handleClose} className="p-2 bg-white/10 rounded-full text-white backdrop-blur-md">
                             <X size={20} />
                         </button>
                     </div>
@@ -228,7 +253,7 @@ export default function CaptureModal({ isOpen, onClose, onCapture, habits = [], 
                             onClick={handleTapToFocus}
                         >
                             {capturedImage ? (
-                                <img src={capturedImage} alt="Captured" className="w-full h-full object-cover max-w-[33px] max-h-[33px]" />
+                                <img src={capturedImage} alt="Captured" className="w-full h-full object-cover" />
                             ) : (
                                 <>
                                     <video

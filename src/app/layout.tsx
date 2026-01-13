@@ -24,6 +24,7 @@ import { LanguageProvider } from "@/lib/context/LanguageContext";
 import { AppProvider } from "@/lib/context/AppContext";
 
 import BottomNav from "@/components/layout/BottomNav";
+import ReminderManager from "@/components/layout/ReminderManager";
 
 export default function RootLayout({
     children,
@@ -40,6 +41,7 @@ export default function RootLayout({
             <body>
                 <LanguageProvider>
                     <AppProvider>
+                        <ReminderManager />
                         {children}
                         <BottomNav />
                     </AppProvider>

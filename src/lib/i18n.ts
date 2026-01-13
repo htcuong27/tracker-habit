@@ -128,6 +128,18 @@ export const translations = {
         captureModalFlip: "Lật lại",
         noPhotos: "Chưa có ảnh",
         addPhoto: "Thêm ảnh",
+        notificationTitle: "Nhắc nhở thói quen",
+        notificationBody: "Đã tới lúc thực hiện: {name}",
+        notificationAdvanceBody: "{name} sẽ bắt đầu sau {minutes} phút nữa! ({time})",
+        notificationAdvanceTime: "Báo trước",
+        notificationStyle: "Giao diện thông báo",
+        notificationStyleDefault: "Mặc định",
+        notificationStyleVibrant: "Sống động",
+        notificationStyleMinimal: "Tối giản",
+        minutesBefore: "{count} phút trước",
+        atTime: "Đúng giờ",
+        testNotification: "Thử thông báo ngay",
+        testNotificationBody: "Đây là thông báo thử nghiệm từ Habit Snap! 🎉",
     },
     en: {
         // Home
@@ -141,7 +153,7 @@ export const translations = {
         less: "Less",
         more: "More",
         habits: "habits",
-        weekDaysShort: "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
+        weekDaysShort: "Sun,Mon,Tue,Wed,Thu,Fri,Sat",
 
         // Habit Form Modal
         habitFormAdd: "Add Habit",
@@ -257,6 +269,18 @@ export const translations = {
         captureModalFlip: "Flip",
         noPhotos: "No photos",
         addPhoto: "Add photo",
+        notificationTitle: "Habit Reminder",
+        notificationBody: "It's time for: {name}",
+        notificationAdvanceBody: "{name} starts in {minutes} minutes! ({time})",
+        notificationAdvanceTime: "Remind before",
+        notificationStyle: "Notification UI",
+        notificationStyleDefault: "Default",
+        notificationStyleVibrant: "Vibrant",
+        notificationStyleMinimal: "Minimal",
+        minutesBefore: "{count} mins before",
+        atTime: "At time",
+        testNotification: "Test notification now",
+        testNotificationBody: "This is a test notification from Habit Snap! 🎉",
     },
 };
 

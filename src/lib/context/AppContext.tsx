@@ -2,6 +2,12 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+export interface NotificationSettings {
+    enabled: boolean;
+    advanceMinutes: number;
+    uiStyle: 'default' | 'vibrant' | 'minimal';
+}
+
 interface AppContextType {
     userName: string;
     setUserName: (name: string) => void;
@@ -9,6 +15,9 @@ interface AppContextType {
     toggleTheme: () => void;
     isMobileMenuOpen: boolean;
     setMobileMenuOpen: (open: boolean) => void;
+    // Notification Settings
+    notificationSettings: NotificationSettings;
+    updateNotificationSettings: (settings: Partial<NotificationSettings>) => void;
     // Global Actions
     triggerAddHabit: () => void;
     isAddHabitOpen: boolean;
@@ -22,6 +31,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [theme, setTheme] = useState<'dark' | 'light'>('dark');
     const [mounted, setMounted] = useState(false);
 
+    const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>({
+        enabled: false,
+        advanceMinutes: 0,
+        uiStyle: 'default'
+    });
+
     // Global Modal States
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isAddHabitOpen, setAddHabitOpen] = useState(false);
@@ -31,10 +46,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         // Load saved settings
         const savedName = localStorage.getItem("userName");
         const savedTheme = localStorage.getItem("theme") as 'dark' | 'light';
+        const savedNotificationSettings = localStorage.getItem("notificationSettings");
 
         if (savedName) setUserName(savedName);
         if (savedTheme) setTheme(savedTheme);
         else setTheme('dark'); // Default to dark/black
+
+        if (savedNotificationSettings) {
+            try {
+                setNotificationSettings(JSON.parse(savedNotificationSettings));
+            } catch (e) {
+                console.error("Error loading notification settings", e);
+            }
+        }
     }, []);
 
     useEffect(() => {
@@ -59,8 +83,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         }
     }, [theme, mounted]);
 
+    useEffect(() => {
+        if (!mounted) return;
+        localStorage.setItem("notificationSettings", JSON.stringify(notificationSettings));
+    }, [notificationSettings, mounted]);
+
     const toggleTheme = () => {
         setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    };
+
+    const updateNotificationSettings = (settings: Partial<NotificationSettings>) => {
+        setNotificationSettings(prev => ({ ...prev, ...settings }));
     };
 
     const triggerAddHabit = () => {
@@ -75,6 +108,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             toggleTheme,
             isMobileMenuOpen,
             setMobileMenuOpen,
+            notificationSettings,
+            updateNotificationSettings,
             triggerAddHabit,
             isAddHabitOpen,
             setAddHabitOpen

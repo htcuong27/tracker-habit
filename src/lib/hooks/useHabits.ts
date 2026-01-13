@@ -25,6 +25,8 @@ export const useHabits = () => {
                         color: "#f43f5e",
                         streak: 0,
                         completedDays: {},
+                        reminderTime: "08:00",
+                        frequency: ["daily"]
                     },
                     {
                         id: `habit-${Date.now()}-2`,
@@ -33,6 +35,8 @@ export const useHabits = () => {
                         color: "#8b5cf6",
                         streak: 0,
                         completedDays: {},
+                        reminderTime: "09:00",
+                        frequency: ["daily"]
                     },
                     {
                         id: `habit-${Date.now()}-2`,
@@ -41,6 +45,8 @@ export const useHabits = () => {
                         color: "#8b5cf6",
                         streak: 0,
                         completedDays: {},
+                        reminderTime: "10:00",
+                        frequency: ["daily"]
                     },
                     {
                         id: `habit-${Date.now()}-2`,
@@ -49,6 +55,8 @@ export const useHabits = () => {
                         color: "#8b5cf6",
                         streak: 0,
                         completedDays: {},
+                        reminderTime: "11:00",
+                        frequency: ["daily"]
                     },
                     {
                         id: `habit-${Date.now()}-2`,
@@ -57,6 +65,8 @@ export const useHabits = () => {
                         color: "#8b5cf6",
                         streak: 0,
                         completedDays: {},
+                        reminderTime: "14:00",
+                        frequency: ["daily"]
                     },
                     {
                         id: `habit-${Date.now()}-3`,
@@ -65,6 +75,8 @@ export const useHabits = () => {
                         color: "#0ea5e9",
                         streak: 0,
                         completedDays: {},
+                        reminderTime: "20:00",
+                        frequency: ["daily"]
                     },
                 ];
 
